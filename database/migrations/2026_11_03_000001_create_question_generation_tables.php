@@ -26,10 +26,10 @@ return new class extends Migration {
 
         Schema::create('questions', function (Blueprint $t) {
             $t->id();
-            $t->foreignId('source_note_id')->constrained('source_notes')->cascadeOnDelete();
+            $t->foreignId('source_note_id')->nullable()->constrained('source_notes')->cascadeOnDelete();  // null = typed manually
             $t->foreignId('topic_id')->nullable()->constrained('topics')->nullOnDelete();
             $t->string('topic_hint')->nullable();                // AI's suggested topic label
-            $t->string('type', 20);                              // mcq|true_false
+            $t->string('type', 20);                              // mcq|true_false|text_input
             $t->string('stem', 500);
             $t->string('hint', 255)->nullable();
             $t->string('explanation', 500)->nullable();          // shown after answering
