@@ -1,27 +1,38 @@
-*.log
-.DS_Store
+# Dependencies (the usual cause of "10,000+ changes")
+node_modules/
+vendor/
+
+# Secrets and local config: never commit these
 .env
-.env.backup
-.env.production
-.phpactor.json
+.env.*
+!.env.example
+
+# Build output and tool caches
+dist/
+build/
+.expo/
+.expo-shared/
+web-build/
+.vite/
 .phpunit.result.cache
-/.codex
-/.cursor/
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/public/build
-/public/fonts-manifest.dev.json
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-/vendor
-_ide_helper.php
-Homestead.json
-Homestead.yaml
+*.log
+
+# Laravel runtime files
+storage/*.key
+storage/logs/
+storage/framework/cache/data/
+storage/framework/sessions/
+storage/framework/views/
+bootstrap/cache/*
+!bootstrap/cache/.gitignore
+public/hot
+public/storage
+
+# Native build folders if you ever run `expo prebuild`
+android/
+ios/
+
+# OS / editor junk
+.DS_Store
 Thumbs.db
+.idea/
