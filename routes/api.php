@@ -8,7 +8,12 @@ use App\Http\Controllers\SourceNoteController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TopicController;
 
-Route::post('login', [AuthController::class, 'login']);
+Route::middleware('throttle:10,1')->group(function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);        // creates PARENT accounts only
+    Route::post('setup-admin', [AuthController::class, 'setupAdmin']);   // only works while no admin exists
+});
+Route::get('setup-status', [AuthController::class, 'setupStatus']);
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
@@ -29,7 +34,6 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::put('questions/{question}', [QuestionController::class, 'update']);
     Route::delete('questions/{question}', [QuestionController::class, 'destroy']);
 
-    // AI generation (from the earlier job)
     Route::post('source-notes', [SourceNoteController::class, 'store']);
     Route::get('source-notes/{note}', [SourceNoteController::class, 'show']);
     Route::post('source-notes/{note}/regenerate', [SourceNoteController::class, 'regenerate']);
